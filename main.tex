@@ -2,217 +2,29 @@
 
 \documentclass[12pt,oneside]{book}
 
-\newlength{\textpt}
-\setlength{\textpt}{12pt}
-    
-\newcommand{\flypage}[1]{\begin{titlepage}\begin{center}\vspace*{\stretch{1}}#1\vspace*{\stretch{1}}\end{center}\end{titlepage}}
-    
-%========基本必备的宏包========%
-\RequirePackage{calc,float,moresize}
-%\RequirePackage[onehalfspacing]{setspace}
-\linespread{1.5}
-%1.3 onehalfspacing
-%试卷或需要文字紧凑的
-%1.6 doublespacing
-
-%===========加入目录 某章或某节=====%
-\makeatletter
-
-\newcommand{\addchtoc}[1]{
-        \cleardoublepage
-        \phantomsection
-        \addcontentsline{toc}{chapter}{#1}}
-
-\newcommand{\addsectoc}[1]{
-        \phantomsection
-        \addcontentsline{toc}{section}{#1}}
-
-%===========全文基本格式==========%
-\setlength{\parskip}{1.6ex plus 0.2ex minus 0.2ex}   %段落間距
-\setlength{\parindent}{\textpt * \real{2}}
-
-%=========页面设置=========%
-\RequirePackage[a4paper, %a4paper size 297:210 mm
-  bindingoffset=10mm,%裝訂線
-  top=35mm,  %上邊距 包括頁眉
-  bottom=30mm,%下邊距 包括頁腳
-  inner=10mm,  %左邊距or inner
-  outer=10mm,  %右邊距or  outer
-  headheight=10mm,%頁眉
-  headsep=15mm,%
-  footskip=15mm,%
-  marginparsep=10pt, %旁註與正文間距
-  marginparwidth=6em,includemp=true% 旁註寬度計入width%旁註寬度
-  ]{geometry}
-
-%color
-\RequirePackage[table,svgnames]{xcolor}
-
-%================字體================%
-%设置数学字体
-\RequirePackage{amssymb,amsmath}
-\RequirePackage{stmaryrd}
-\everymath{\displaystyle}
-
-\RequirePackage{fontspec}
-%設置英文字體
-\setmainfont[Mapping=tex-text]{DejaVu Serif}
-\setsansfont[Mapping=tex-text]{DejaVu Sans}
-\setmonofont[Mapping=tex-text]{DejaVu Sans Mono}
-
-
-%中文環境
-\RequirePackage[]{xeCJK}
-\xeCJKsetup{PunctStyle=plain}
-\setCJKmainfont[FallBack=DejaVu Serif, ItalicFont=TW-Kai]{Source Han Serif CN}
-\setCJKsansfont[FallBack=DejaVu Sans]{Source Han Sans CN}
-\setCJKmonofont[FallBack=DejaVu Sans Mono]{TW-Kai}
-
-
-%%===============中文化=========%
-\renewcommand\contentsname{目~录}
-\renewcommand\listfigurename{插图目录}
-\renewcommand\listtablename{表格目录}
-\renewcommand\bibname{参~考~文~献}
-\renewcommand\indexname{索~引}
-\renewcommand\figurename{图}
-\renewcommand\tablename{表}
-\renewcommand\partname{部分}
-\renewcommand\appendixname{附录}
-\renewcommand{\today}{\number\year{}年\number\month{}月\number\day{}日}
-
-
-%=======页眉页脚格式=========%
-\RequirePackage{fancyhdr}   %頁眉頁腳
-\RequirePackage{zhnumber}  %计数器中文化
-\pagestyle{fancy}
-\renewcommand{\sectionmark}[1]
-{\markright{第\zhnumber{\arabic{section}}节~~#1}{}}
-
-\fancypagestyle{plain}{%
-    \fancyhf{}
-    \renewcommand{\headrulewidth}{0pt}
-    \renewcommand{\footrulewidth}{0pt}
-    \fancyhf[HR]{\ttfamily \footnotesize \rightmark }
-    \fancyhf[FR]{\thepage}}
-\pagestyle{plain}
-
-
-%=========章節標題設計=========%
-\RequirePackage{titlesec}
-%修改part
-\titleformat{\part}{\huge\sffamily}{}{0em}{}
-%修改chapter
-\titleformat{\chapter}{\LARGE\sffamily}{}{0em}{}
-%修改section
-\titleformat{\section}{\Large\sffamily}{}{0em}{}
-%修改subsection
-\titleformat{\subsection}{\large\sffamily}{}{0em}{}
-%修改subsubsection
-\titleformat{\subsubsection}{\normalsize\sffamily}{}{0em}{}
-
-
-%================目录===============%
-%toc label to contents space   dynamic adjust
-\RequirePackage{tocloft}%
-\renewcommand{\numberline}[1]{%
-  \@cftbsnum #1\@cftasnum~\@cftasnumb%
-}
-
-%==============超鏈接===============%
-\RequirePackage[colorlinks=true,linkcolor=blue,citecolor=blue]{hyperref} %設置書簽和目錄鏈接等
-\newcommand{\hlabel}[1]{\phantomsection \label{#1}}%某一小段的引用
-
-
-%=================文字強調=========%
-\RequirePackage{xeCJKfntef}
-
-%==================插入圖片=======%
-\RequirePackage{wrapfig}
-\RequirePackage{graphicx}
-\graphicspath{{figures/}}
-%change the caption style a little like 1-1
-\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
-
-
-%==============插入表格========%
-\RequirePackage{booktabs}
-\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
-\RequirePackage{caption}
-%\renewcommand{\arraystretch}{1.3}
-%如果用setspace宏包而不是linespread调整行间距，那么才需要额外的表格行距拉大。
-
-%插入代码
-\RequirePackage{fancyvrb} 
-\fvset{frame=lines,tabsize=4 ,baselinestretch=1.8, fontsize=\footnotesize}
-
-
-%==========其他宏包===========%
-\RequirePackage{tikz} 
-\usetikzlibrary{calc}
-
-%========脚注=========%
-\newcommand*\circled[1]{%
-  \tikz[baseline=(char.base)]\node[shape=circle,draw,inner sep=0.4pt,minimum size=4pt] (char) {#1};}
-\newcommand*\circledarabic[1]{\circled{\arabic{#1}}}
-
-\RequirePackage{perpage} %the perpage package
-\MakePerPage{footnote} %the perpage package command
-
-\renewcommand*{\thefootnote}{\protect\circledarabic{footnote}}
-
-
-\renewcommand\@makefntext[1]
-{\vspace{5pt}
-\noindent
-\makebox[20pt][c]{\@makefnmark}
-\fontsize{10pt}{12pt}\selectfont #1}
-
-\setlength{\skip\footins}{20pt plus 10pt}
-%main body 与脚注之间的距离
-
-
-%framed环境
-\RequirePackage{framed}
-
-\newenvironment{shici}{
-\begin{verse}
-\centering\large\hspace{12pt}}
-{\end{verse}}
-
-\RequirePackage{indentfirst} 
-
-\makeatother
-
-
+\usepackage{mybook} 
+\usepackage{mybookcover}
 
 \title{人生的智慧}
 \author{叔本华}
 \hypersetup{
-  pdfkeywords={},
-  pdfsubject={制作者邮箱：a358003542@outlook.com},
-  pdfcreator={万泽}}
+    pdftitle={人生的智慧},
+    pdfauthor={叔本华},
+    pdfcreator={Wander},
+    pdfsubject={文学.哲学},
+}
   
-\newcommand{\bookcover}[1]{\tikz[remember picture,overlay]{\node[inner sep=0] at (current page.center)
-{\includegraphics[width=\paperwidth,height=\paperheight]{#1}}}} 
- 
 
-  
 \begin{document}
-\frontmatter 
-
-\thispagestyle{empty}
-
 \bookcover{book_cover.png}
 
-\cleardoublepage
-
-\flypage{感谢上天}
+\flypage{感谢上帝}
 
 
-\addchtoc{编者前言}
-\chapter*{编者前言}
-本文是笔者关于叔本华的人生的智慧一书的整理，编辑和点评。
+\frontmatter 
+\addchtoc{编者言}
+\chapter*{编者言}
+本文是我关于叔本华的人生的智慧一书的整理，编辑和点评。
 
 本文主要来自韦启昌的翻译版本，后发现[台]张尚德的翻译版本在某些地方翻的不错的也会借鉴过来，张版的翻译处会做出说明，然后若实在有对翻译不满意的地方，我如果精力充沛的话，也会试着找寻原英文来重新翻译，原英文来自古腾堡计划的《The Essays of Arthur Schopenhauer the Wisdom of Life》。我对翻译质量不作评论，只是谢谢翻译者并试着从沙砾中发现金矿。
 
@@ -222,7 +34,6 @@
 
 原书第五章建议与格言部分有点显得是原出版社凑篇幅而故意加进去的，这里将其舍弃了。
 
-
 \addchtoc{引言}
 \chapter*{引言}
 在这本书里，所谓的“人生的智慧”这个术语仅仅只是一般意义上的讨论，其是一门艺术，一门讨论如何尽量幸福、愉快地度过一生的艺术\footnote{形而上者谓之道，形而下者谓之器——周易。原翻译引入什么形而下这样的翻译只是徒增晦涩罢了，这里借鉴英文版的 the common meaning of the term 稍作翻译调整。}。关于这方面的教诲在哲学上可称为“幸福论”。因此，这本著作教导人们如何才能享有幸福的生存。要对“幸福的生存”作出定义的话，那从纯客观的角度考虑，或者更确切地说，通过冷静、缜密的思考（因为这里涉及到主观的判断），这一幸福的生存绝对优于非生存。从这一定义我们就可以这样推论：我们依恋这一生存，就是因为这一生存本身的缘故，而不是出于对死亡的恐惧；并且我们渴望看到这一生存能够永恒地延续。至于人生是否或者能否与如此定义的生存相吻合，这本身就是一个问题。对于这一问题，我的哲学已经清楚无误地给予了否定的答案；但哲学上的幸福论对这一问题却预设了肯定的答案。幸福论的这种肯定答案是基于人的一个与生俱来的错误，这个错误在我的主要著作\footnote{指《作为意欲和表象的世界》。——译者。}的第二卷第四十九章已遭到批判。但要完成诸如幸福论一类的著作，我就只能放弃更高的、属于形而上和道德的审视角度——而我真正的哲学本来就是要引领人们进入这样的审视角度。因此，我在这本书里所作的议论只要是从平常、实用的角度出发，并且保留着与此角度相关的谬误时，那么，这些议论就确实经过了折衷的处理。因此原因，它们的价值就只能是有条件的。其实，Eudamonologie\footnote{亦即幸福论——译者。}这个词本身就是一个委婉词。另外，这些议论还说不上完整彻底——其中的一个原因是我所讨论的主题难以穷尽；另一个原因就是如果我要全面讨论这个主题，那么，我就只能重复别人已经说过的话。【就幸福论这个课题来说本身就包含着一种哲学上的缺乏思辨的错误，这里作者是退而求其次仅仅从实用的角度来做出一些讨论。】 
@@ -230,11 +41,9 @@
 就我的记忆所及，卡丹奴斯那本颇值一读的《论逆境》其目的与我这本箴言书大同小异。它可以作为我这本书的补充。虽然亚里士多德在他的《修辞学》第一部第五章里，掺进了简短的幸福论方面的论述，但那些只是老生常谈。我并没有并没有这些前辈的著作，因为汇集别人的话语并不是我的工作；况且，如果我这样做了，那我书中的观点就不能一以贯之，而观点的连贯性却是这类著作的灵魂。当然，一般来说，各个时代的智者们，都说过同样的话语，而愚人们——也就是各个时代的数不胜数的大多数人——也做着恰恰相反的同一样事情。因此，伏尔泰说过，“\textbf{当我们离开这个世界的时候，这个世界还是照样愚蠢和邪恶，跟我们刚来到这个世界的时候所发现的并没有两样。}” 
 
 
-
 \addchtoc{目录}
 \setcounter{tocdepth}{2}    
 \tableofcontents
-
 
 
 \mainmatter
